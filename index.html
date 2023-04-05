@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>QR Scanner Demo</title>
-	<script type="module" src="qr-scanner.umd.min.js"></script>
 </head>
 <body>
 <h1>Scan from WebCam:</h1>
@@ -65,7 +64,9 @@
 
 <!--<script src="../qr-scanner.umd.min.js"></script>-->
 <!--<script src="../qr-scanner.legacy.min.js"></script>-->
-<script>
+<script type="module">
+    import QrScanner from "../qr-scanner.min.js";
+
     const video = document.getElementById('qr-video');
     const videoContainer = document.getElementById('video-container');
     const camHasCamera = document.getElementById('cam-has-camera');
