@@ -73,15 +73,11 @@
 			updateFlashAvailability();
 		});
 
-		QrScanner.hasCamera().then(hasCamera => camHasCamera.textContent = hasCamera);
+		// QrScanner.hasCamera().then(hasCamera => camHasCamera.textContent = hasCamera);
 
 		// for debugging
 		window.scanner = scanner;
 		scanner.setInversionMode("both");
-
-		camList.addEventListener('change', event => {
-			scanner.setCamera(event.target.value).then(updateFlashAvailability);
-		});
 
 		flashToggle.addEventListener('click', () => {
 			scanner.toggleFlash().then(() => flashState.textContent = scanner.isFlashOn() ? 'on' : 'off');
