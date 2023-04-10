@@ -26,9 +26,11 @@
 	<input type="file" id="file-selector">
 	<b>Detected QR code: </b>
 	<span id="file-qr-result">None</span>
+	<script type="text/javascript">
+		(retvELID = function(element_name) {return document.getElementById(element_name);});
+	</script>
 	<script type="module">
 		import QrScanner from "./qr-scanner.min.js";
-		(retvELID = function(element_name) {return document.getElementById(element_name);});
 
 		const [preview, previewContainer, toggleFlash, flashState, scanResult] = [retvELID("preview"), retvELID("preview-wrapper"), retvELID("flash"), retvELID("flash-state"), retvELID("cam-qr-result")];
 
