@@ -26,9 +26,11 @@
 	<input type="file" id="file-selector">
 	<b>Detected QR code: </b>
 	<span id="file-qr-result">None</span>
+	
 	<script type="text/javascript">
 		(retvELID = function(element_name) {return document.getElementById(element_name);});
 	</script>
+
 	<script type="module">
 		import QrScanner from "./qr-scanner.min.js";
 
@@ -68,7 +70,7 @@
 		window.scanner = scanner;
 		scanner.setInversionMode("both");
 
-		flashToggle.addEventListener('click', () => {
+		toggleFlash.addEventListener('click', () => {
 			scanner.toggleFlash().then(() => flashState.textContent = scanner.isFlashOn() ? 'on' : 'off');
 		});
 
