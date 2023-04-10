@@ -81,7 +81,7 @@
 				.catch(e => setResult(fileQrResult, { data: e || 'No QR code found.' }));
 		});
 
-		window.addEventListener("mouseleave", (e) {
+		window.addEventListener("mouseleave", (e) => {
 			console.log(e);
 			scanner.stop();
 		});
