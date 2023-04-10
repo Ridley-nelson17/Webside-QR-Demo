@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en-US">
-	<head>
-		<meta charset="UTF-8">
-		<title>QR Scanner Demo</title>
-	</head>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>QR Scanner Demo</title>
+</head>
 
 <body>
-	<h1>Preview:</h1>
+	<h1>Scan from WebCam:</h1>
 	<div id="video-container">
-		<video id="preview-container"></video>
+		<video id="qr-video"></video>
 	</div>
 	<div>
 		<label>
@@ -65,11 +66,10 @@
 
 	<!--<script src="../qr-scanner.umd.min.js"></script>-->
 	<!--<script src="../qr-scanner.legacy.min.js"></script>-->
-	<script src="https://raw.githubusercontent.com/Ridley-nelson17/Webside-QR-Demo/main/qr-scanner.min.js"></script>
 	<script type="module">
-		// import QrScanner;
+		import QrScanner from "./qr-scanner.min.js";
 
-		const video = document.getElementById('preview-container');
+		const video = document.getElementById('qr-video');
 		const videoContainer = document.getElementById('video-container');
 		const camHasCamera = document.getElementById('cam-has-camera');
 		const camList = document.getElementById('cam-list');
