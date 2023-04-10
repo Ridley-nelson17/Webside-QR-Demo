@@ -80,6 +80,11 @@
 				.then(result => setResult(fileQrResult, result))
 				.catch(e => setResult(fileQrResult, { data: e || 'No QR code found.' }));
 		});
+
+		window.addEventListener("mouseleave", (e) {
+			console.log(e);
+			scanner.stop();
+		});
 	</script>
 
 	<style>
