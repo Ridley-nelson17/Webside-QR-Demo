@@ -1,122 +1,59 @@
 <!DOCTYPE html>
-<html lang="en-US">
-	<head>
-		<meta charset="UTF-8">
-		<title>QR Scanner Demo</title>
-	</head>
-
+<html>
+<head>
+  <title>Real-time QR Code Scanner</title>
+  <script async src="https://docs.opencv.org/master/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+</head>
 <body>
-	<div id="preview-wrapper"><video id="preview"></video></div>
-	<div>
-		<button id="flash">📸 Flash: <span id="flash-state">off</span></button>
-	</div>
-	<br>
-	<b>Detected QR code: </b><span id="cam-qr-result">None</span>
-	<br>
-	<button id="start-button">Start</button>
-	<button id="stop-button">Stop</button>
-	<br>
-	<h1>Scan from File:</h1>
-	<input type="file" id="file-selector">
-	<b>Detected QR code: </b>
-	<span id="file-qr-result">None</span>
-	
-	<script type="text/javascript">
-		(retvELID = function(element_name) {return document.getElementById(element_name);});
-	</script>
-
-	<script type="module">
-		import QrScanner from "./qr-scanner.min.js";
-
-		const [preview, previewContainer, toggleFlash, flashState, scanResult] = [retvELID("preview"), retvELID("preview-wrapper"), retvELID("flash"), retvELID("flash-state"), retvELID("cam-qr-result")];
-		const fileSelector = document.getElementById('file-selector');
-		const fileQrResult = document.getElementById('file-qr-result');
-
-		function setResult(label, result) {
-			console.log(result.data);
-			label.textContent = result.data.toString() + " --- " + new Date().toString();
-		}
-
-		const scanner = new QrScanner(preview, result => setResult(scanResult, result), {
-			onDecodeError: error => {
-				scanResult.textContent = error;
-				scanResult.style.color = 'inherit';
-			},
-			highlightScanRegion: true,
-			highlightCodeOutline: true,
-		});
-
-		const updateFlashAvailability = () => {
-			scanner.hasFlash().then(hasFlash => {
-				toggleFlash.style.display = hasFlash ? 'inline-block' : 'none';
-			});
-		};
-
-		scanner.start().then(() => {updateFlashAvailability();});
-
-		// for debugging
-		window.scanner = scanner;
-		scanner.setInversionMode("both");
-
-		toggleFlash.addEventListener('click', () => {
-			scanner.toggleFlash().then(() => flashState.textContent = scanner.isFlashOn() ? 'on' : 'off');
-		});
-
-		document.getElementById('start-button').addEventListener('click', () => {
-			scanner.start();
-		});
-
-		document.getElementById('stop-button').addEventListener('click', () => {
-			scanner.stop();
-		});
-
-
-		fileSelector.addEventListener('change', event => {
-			const file = fileSelector.files[0];
-			if (!file) {
-				return;
-			}
-			QrScanner.scanImage(file, { returnDetailedScanResult: true })
-				.then(result => setResult(fileQrResult, result))
-				.catch(e => setResult(fileQrResult, { data: e || 'No QR code found.' }));
-		});
-		window.addEventListener("beforeunload", (e) => {
-			console.log("ended");
-			scanner.stop();
-		});
-		window.addEventListener("mouseleave", (e) => {
-			console.log("ended");
-			scanner.stop();
-		});
-	</script>
-
-	<style>
-		div {
-			margin-bottom: 16px;
-		}
-
-		#preview-wrapper {
-			line-height: 0;
-		}
-
-		#preview-wrapper.example-style-1 .scan-region-highlight-svg,
-		#preview-wrapper.example-style-1 .code-outline-highlight {
-			stroke: #64a2f3 !important;
-		}
-
-		#flash {
-			display: none;
-		}
-
-		hr {
-			margin-top: 32px;
-		}
-
-		input[type="file"] {
-			display: block;
-			margin-bottom: 16px;
-		}
-	</style>
+  <h1>Real-time QR Code Scanner</h1>
+  <video id="video" width="250" height="250" playsinline></video>
+  <canvas id="canvas" style="display:none"></canvas>
+  <div id="result"></div>
+  <script>
+    let video = document.getElementById("video");
+    let canvas = document.getElementById("canvas");
+    let context = canvas.getContext("2d");
+    let videoStream;
+    let codeReader;
+    let isProcessing = false;
+    function onOpenCvReady() {
+      codeReader = new cv.QRCodeDetector();
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+          .then(function (stream) {
+            video.srcObject = stream;
+            video.play();
+            videoStream = stream;
+            tick();
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+      }
+    }
+    function tick() {
+      if (isProcessing) {
+        requestAnimationFrame(tick);
+        return;
+      }
+      isProcessing = true;
+      canvas.hidden = false;
+      canvas.height = video.videoHeight;
+      canvas.width = video.videoWidth;
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+      let imgMat = cv.matFromImageData(imageData);
+      let bbox = new cv.Rect();
+      let data = codeReader.detectAndDecode(imgMat, bbox);
+      if (data.length > 0) {
+        document.getElementById("result").textContent = data;
+      }
+      isProcessing = false;
+      requestAnimationFrame(tick);
+    }
+    window.addEventListener('beforeunload', function() {
+      videoStream.getTracks()[0].stop();
+    });
+  </script>
 </body>
-
 </html>
