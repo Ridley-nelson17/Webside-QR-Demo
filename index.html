@@ -47,6 +47,18 @@
 
 		<script type="text/javascript">
 			(retvELID = function(element_name) {return document.getElementById(element_name);});
+
+			function openFullscreen(element) {
+				if (element.requestFullscreen) {
+					element.requestFullscreen();
+				} else if (element.mozRequestFullScreen) { /* Firefox */
+					element.mozRequestFullScreen();
+				} else if (element.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+					element.webkitRequestFullscreen();
+				} else if (element.msRequestFullscreen) { /* IE/Edge */
+					element.msRequestFullscreen();
+				}
+			}
 		</script>
 
 		<script type="module">
@@ -87,6 +99,7 @@
 
 			document.getElementById('start-button').addEventListener('click', () => {
 				scanner.start();
+				openFullscreen(previewContainer);
 			});
 
 			document.getElementById('stop-button').addEventListener('click', () => {
