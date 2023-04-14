@@ -52,7 +52,7 @@
 		<script type="text/javascript">
 			(retvELID = function(element_name) {return document.getElementById(element_name);});
 
-			(requestFullScreen = function(element_id) {const fse = retvELID(element_id);(fse.requestFullscreen) ? fse.requestFullscreen() : (fse.mozRequestFullScreen) ? fse.mozRequestFullScreen() : (fse.webkitRequestFullscreen) ? fse.webkitRequestFullscreen() : fse.msRequestFullscreen();})
+			(requestFullScreen = function(element) {(element.requestFullscreen) ? element.requestFullscreen() : (element.mozRequestFullScreen) ? element.mozRequestFullScreen() : (element.webkitRequestFullscreen) ? element.webkitRequestFullscreen() : element.msRequestFullscreen();})
 			// function openFullscreen(element) {
 			// 	if (element.requestFullscreen) {
 			// 		element.requestFullscreen();
@@ -105,7 +105,7 @@
 			document.getElementById('start-button').addEventListener('click', () => {
 				scanner.start();
 				updateFlashAvailability();
-				openFullscreen(previewContainer);
+				openFullScreen(previewContainer);
 			});
 
 			document.getElementById('stop-button').addEventListener('click', () => {
