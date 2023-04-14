@@ -51,7 +51,7 @@
 
 		<script type="text/javascript">
 			(retvELID = function(element_name) {return document.getElementById(element_name);});
-			(requestFullScreen = function(element) {(element.requestFullscreen) ? element.requestFullscreen() : (element.mozRequestFullScreen) ? element.mozRequestFullScreen() : (element.webkitRequestFullscreen) ? element.webkitRequestFullscreen() : element.msRequestFullscreen();})
+			(requestFullScreen = function(element) {(element.requestFullscreen) ? element.requestFullscreen() : (element.mozRequestFullScreen) ? element.mozRequestFullScreen() : (element.webkitRequestFullscreen) ? element.webkitRequestFullscreen() : element.msRequestFullscreen();});
 		</script>
 
 		<script type="module">
@@ -81,10 +81,13 @@
 				});
 			};
 
-			// scanner.start().then(() => {updateFlashAvailability();});
+			scanner.start().then(() => {
+				updateFlashAvailability();
+				requestFullScreen(previewContainer);
+			});
 
 			// for debugging
-			// window.scanner = scanner;
+			window.scanner = scanner;
 			scanner.setInversionMode("both");
 
 			toggleFlash.addEventListener('click', () => {
@@ -93,8 +96,6 @@
 
 			document.getElementById('start-button').addEventListener('click', () => {
 				scanner.start();
-				updateFlashAvailability();
-				requestFullScreen(previewContainer);
 			});
 
 			document.getElementById('stop-button').addEventListener('click', () => {
