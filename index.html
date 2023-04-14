@@ -33,13 +33,9 @@
 				position: absolute;
 				width: 100%;
 			}
-			#overr {
-				border-color: blue;
-			}
 		</style>
 	</head>
 	<body>
-		<div id="overr"></div>
 		<div id="preview-wrapper"><video id="preview"></video></div>
 		<div>
 			<button id="flash">📸 Flash: <span id="flash-state">off</span></button>
@@ -56,17 +52,6 @@
 		<script type="text/javascript">
 			(retvELID = function(element_name) {return document.getElementById(element_name);});
 			(requestFullScreen = function(element) {(element.requestFullscreen) ? element.requestFullscreen() : (element.mozRequestFullScreen) ? element.mozRequestFullScreen() : (element.webkitRequestFullscreen) ? element.webkitRequestFullscreen() : element.msRequestFullscreen();})
-			// function openFullscreen(element) {
-			// 	if (element.requestFullscreen) {
-			// 		element.requestFullscreen();
-			// 	} else if (element.mozRequestFullScreen) { /* Firefox */
-			// 		element.mozRequestFullScreen();
-			// 	} else if (element.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-			// 		element.webkitRequestFullscreen();
-			// 	} else if (element.msRequestFullscreen) { /* IE/Edge */
-			// 		element.msRequestFullscreen();
-			// 	}
-			// }
 		</script>
 
 		<script type="module">
@@ -88,7 +73,6 @@
 				highlightScanRegion: true,
 				highlightCodeOutline: true,
 				preferredCamera: "environment",
-				overlay: retvELID("overr")
 			});
 
 			const updateFlashAvailability = () => {
