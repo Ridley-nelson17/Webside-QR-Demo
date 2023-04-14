@@ -30,8 +30,8 @@
 				margin-bottom: 16px;
 			}
 			video {
-				position: absolute;
-				width: 100%;
+				/* position: absolute;
+				width: 100%; */
 			}
 		</style>
 	</head>
@@ -92,10 +92,10 @@
 				});
 			};
 
-			scanner.start().then(() => {updateFlashAvailability();});
+			// scanner.start().then(() => {updateFlashAvailability();});
 
 			// for debugging
-			window.scanner = scanner;
+			// window.scanner = scanner;
 			scanner.setInversionMode("both");
 
 			toggleFlash.addEventListener('click', () => {
@@ -104,6 +104,7 @@
 
 			document.getElementById('start-button').addEventListener('click', () => {
 				scanner.start();
+				updateFlashAvailability();
 				openFullscreen(previewContainer);
 			});
 
@@ -111,7 +112,7 @@
 				scanner.stop();
 			});
 
-			fileSelector.addEventListener('change', event => {
+			fileSelector.addEventListener('change', (event) => {
 				const file = fileSelector.files[0];
 				if (!file) {
 					return;
