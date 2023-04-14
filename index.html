@@ -30,12 +30,16 @@
 				margin-bottom: 16px;
 			}
 			video {
-				/* position: absolute;
-				width: 100%; */
+				position: absolute;
+				width: 100%;
+			}
+			#overr {
+				border-color: blue;
 			}
 		</style>
 	</head>
 	<body>
+		<div id="overr"></div>
 		<div id="preview-wrapper"><video id="preview"></video></div>
 		<div>
 			<button id="flash">📸 Flash: <span id="flash-state">off</span></button>
@@ -83,6 +87,8 @@
 				},
 				highlightScanRegion: true,
 				highlightCodeOutline: true,
+				preferredCamera: "environment",
+				overlay: retvELID("overr")
 			});
 
 			const updateFlashAvailability = () => {
