@@ -52,17 +52,18 @@
 		<script type="text/javascript">
 			(retvELID = function(element_name) {return document.getElementById(element_name);});
 
-			function openFullscreen(element) {
-				if (element.requestFullscreen) {
-					element.requestFullscreen();
-				} else if (element.mozRequestFullScreen) { /* Firefox */
-					element.mozRequestFullScreen();
-				} else if (element.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-					element.webkitRequestFullscreen();
-				} else if (element.msRequestFullscreen) { /* IE/Edge */
-					element.msRequestFullscreen();
-				}
-			}
+			(requestFullScreen = function(element_id) {const fse = retvELID(element_id);(fse.requestFullscreen) ? fse.requestFullscreen() : (fse.mozRequestFullScreen) ? fse.mozRequestFullScreen() : (fse.webkitRequestFullscreen) ? fse.webkitRequestFullscreen() : fse.msRequestFullscreen();})
+			// function openFullscreen(element) {
+			// 	if (element.requestFullscreen) {
+			// 		element.requestFullscreen();
+			// 	} else if (element.mozRequestFullScreen) { /* Firefox */
+			// 		element.mozRequestFullScreen();
+			// 	} else if (element.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+			// 		element.webkitRequestFullscreen();
+			// 	} else if (element.msRequestFullscreen) { /* IE/Edge */
+			// 		element.msRequestFullscreen();
+			// 	}
+			// }
 		</script>
 
 		<script type="module">
